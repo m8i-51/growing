@@ -6,7 +6,7 @@ services:
       context: ./project/backend
       dockerfile: Dockerfile.prod
     ports:
-      - 8004:8000
+      - 8000:8000
     environment:
       - ENVIRONMENT=production
       - DATABASE_URL=postgres://postgres:postgres@web-db:5432/web_prod

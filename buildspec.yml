@@ -44,3 +44,9 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/growing-backend:prod
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/growing-frontend:builder
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/growing-frontend:prod
+      - IMAGE_DEFINITION_FRONTEND="{\"name\":\"growing-frontend\",\"imageUri\":\"${$AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod\"}"
+      - IMAGE_DEFINITION_BACKEND="{\"name\":\"growing-backend\",\"imageUri\":\"${$AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod\"}"
+      - echo "[${IMAGE_DEFINITION_FRONTEND},${IMAGE_DEFINITION_BACKEND}]" > dev-imagedefinitions.json
+artifacts:
+  files:
+    - dev-imagedefinitions.json

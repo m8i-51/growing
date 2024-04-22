@@ -21,5 +21,7 @@ RUN pip install -r requirements.txt
 #add app
 COPY . .
 
+RUN python app/db.py
+
 #add entrypoint.sh
 CMD gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000

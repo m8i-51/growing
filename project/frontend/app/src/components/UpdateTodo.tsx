@@ -34,6 +34,7 @@ export const UpdateTodo: FC<UpdateTodoProps> = memo(({ id, item, getTodos }) => 
   const onClickUpdateTodo = useCallback(
     async (id: number, item: string) => {
       await fetch(`${API_URL}/todos/${id}`, {
+        mode: 'cors',
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ summary: item }),

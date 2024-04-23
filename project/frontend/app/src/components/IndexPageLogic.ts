@@ -11,7 +11,7 @@ export const useIndexPageLogic = () => {
 
   const getTodos = useCallback(async () => {
     try {
-      const response: Response = await fetch(`${API_URL}/todos`);
+      const response: Response = await fetch(`${API_URL}/todos`, { mode: 'cors' });
       const data = await response.json();
       setTodos(data);
     } catch (error) {
@@ -28,6 +28,7 @@ export const useIndexPageLogic = () => {
     };
 
     fetch(`${API_URL}/todos`, {
+      mode: 'cors',
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTodo),

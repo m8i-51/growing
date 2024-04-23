@@ -29,6 +29,7 @@ export const DeletedTodo: FC<DeletedTodoProps> = memo(({ id, item, getTodos }) =
 
   const onClickDeletedTodo = async (id: number) => {
     await fetch(`${API_URL}/todos/${id}`, {
+      mode: 'cors',
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });

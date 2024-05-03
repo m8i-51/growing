@@ -1,4 +1,3 @@
-# project/backend/app/api/crud.py
 from app.models.pydantic import SummaryPayloadSchema
 from app.models.tortoise import TextSummary
 from typing import Union

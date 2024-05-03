@@ -1,4 +1,3 @@
-# project/backend/app/main.py
 import logging
 import os
 

@@ -11,40 +11,40 @@ phases:
       - >
         aws ecr get-login-password --region ap-northeast-1 \
           | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com
-      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod || true
-      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:builder || true
-      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod || true
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-backend:prod || true
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:builder || true
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:prod || true
   build:
     commands:
       - echo building images app-backend, app-frontend
       - >
         docker build \
-          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod \
+          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-backend:prod \
           -f project/backend/Dockerfile.prod \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod \
+          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-backend:prod \
           ./project/backend
       - >
         docker build \
           --target builder \
-          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:builder \
+          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:builder \
           -f project/frontend/Dockerfile.prod \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:builder \
+          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:builder \
           --build-arg NODE_ENV=production \
           --build-arg REACT_APP_API_SERVICE_URL=$REACT_APP_API_SERVICE_URL \
           ./project/frontend
       - >
         docker build \
-          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod \
+          --cache-from $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:prod \
           -f project/frontend/Dockerfile.prod \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod \
+          -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:prod \
           ./project/frontend
   post_build:
     commands:
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:builder
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod
-      - IMAGE_DEFINITION_FRONTEND="{\"name\":\"growing-frontend\",\"imageUri\":\"${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/growing-frontend:prod\"}"
-      - IMAGE_DEFINITION_BACKEND="{\"name\":\"growing-backend\",\"imageUri\":\"${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/growing-backend:prod\"}"
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-backend:prod
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:builder
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:prod
+      - IMAGE_DEFINITION_FRONTEND="{\"name\":\"morik-frontend\",\"imageUri\":\"${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/morik-frontend:prod\"}"
+      - IMAGE_DEFINITION_BACKEND="{\"name\":\"morik-backend\",\"imageUri\":\"${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/morik-backend:prod\"}"
       - echo "[${IMAGE_DEFINITION_FRONTEND},${IMAGE_DEFINITION_BACKEND}]" > dev-imagedefinitions.json
 artifacts:
   files:

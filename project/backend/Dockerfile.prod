@@ -18,4 +18,3 @@ COPY . .
 EXPOSE 8000
 
 ENTRYPOINT [ "sh", "/usr/src/exe.sh" ]
-# ENTRYPOINT gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0

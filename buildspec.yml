@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    REACT_APP_API_SERVICE_URL: "http://morik-elb-207487474.ap-northeast-1.elb.amazonaws.com"
-    MY_USER_NAME: "morik"
+    REACT_APP_API_SERVICE_URL: "http://morik4-elb-1756510625.ap-northeast-1.elb.amazonaws.com"
+    MY_USER_NAME: "morik4"
 
 phases:
   pre_build:
